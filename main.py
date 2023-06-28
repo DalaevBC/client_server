@@ -11,4 +11,3 @@ if __name__ == "__main__":
             print('connected:', addr)
             result = sort_requests(connection)
             connection.close()
-

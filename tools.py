@@ -40,6 +40,9 @@ def compile_make_one_file(conn, request, make):
 
 
 def compile_few_files(conn, request):
+    """
+    Перебираем и фиксируем, получанные файлы и компилируем в цикле(ниже)
+    """
     file_info = request.decode().split('\n')
     all_file_dict = dict()
 
@@ -74,6 +77,9 @@ def compile_few_files(conn, request):
 
 
 def sort_requests(connect):
+    """
+    Сортировка полученных данных File, Makefile, Number
+    """
     while True:
         request_file = connect.recv(1024 * 1024 * 1024)
         if not request_file or request_file == b'':
@@ -90,48 +96,3 @@ def sort_requests(connect):
             res = compile_make_one_file(connect, request_file, make)
 
     return True
-
-
-# *************  Для отправки, раскоментить и создать соответствующие файлы для отправки
-# import socket
-
-# IP = socket.gethostbyname(socket.gethostname())  # '127.0.0.1'
-# PORT = 1234
-#
-#
-# def send_file(ip, port, make, file_name):
-#     sock = socket.socket()
-#     sock.connect((ip, port))
-#     send_type = 'File'
-#     with open(file_name, "rb") as file:
-#         file_data = file.read()
-#         if make:
-#             send_type = 'Makefile'
-#         sock.send((bytes(f'{send_type} {file_name}\n', encoding='UTF-8')))
-#         sock.sendall(file_data)
-#         response = sock.recv(1024).decode()
-#         print('response', response)  # Result: OK
-#     sock.close()
-#
-#
-# def send_few_files(ip, port):
-#     sock = socket.socket()
-#     sock.connect((ip, port))
-#     sock.send((bytes(f'Number 3\n', encoding='UTF-8')))
-#     send_type = 'File'
-#     for file_name in file_names:
-#         with open(file_name, "rb") as file:
-#             file_data = file.read()
-#             sock.send((bytes(f'{send_type} {file_name}\n', encoding='UTF-8')))
-#             sock.sendall(file_data)
-#             response = sock.recv(1024).decode()
-#     print('response', response)  # Result: OK
-#     sock.close()
-
-
-# file_names = ['just_file.txt', 'just_file1.txt', 'just_file2.txt', 'just_file3.txt']
-# send_file(IP, PORT, True, file_name='Makefile')
-# send_file(IP, PORT, True, file_name='just_file.txt')
-# send_few_files(IP, PORT)
-
-
