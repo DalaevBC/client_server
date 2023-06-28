@@ -1,0 +1,1 @@
+MakedFile : hey.o main.o	gcc hey.o main.o -o MakedFilehey.o : hey.c	gcc -c hey.c -o hey.omain.o : main.c	gcc -c main.c -o main.o
